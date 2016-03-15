@@ -1,0 +1,51 @@
+﻿@using Mandatory1.ViewModels
+@model CipherModel
+<div class="row">
+    <div class="col-lg-12">
+        <h2>The Greatest Common Denominator</h2>
+        <p>Use the Input fields on the left to provide two numbers. The field on the right will show the results</p>
+    </div>
+    @using (Html.BeginForm("GCD", "Home", FormMethod.Post, new { @id = "cipherForm" }))
+    {
+        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+
+            <div class="col-lg-12">
+                <h4>Input Number 1:</h4>
+
+                @Html.ValidationMessageFor(x => x.input)
+                @Html.EditorFor(x => x.input, new { HtmlAttributes = new { @type="number" } })
+
+            </div>
+            <div class="col-lg-12">
+                <h4>Input Number 2:</h4>
+
+                @Html.ValidationMessageFor(x => x.input)
+                @Html.EditorFor(x => x.secret, new { HtmlAttributes = new { @type = "number" } })
+
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+            <div class="col-lg-12">
+                <h4>Output GCD:</h4>
+                <textarea cols="99" rows="12" id="output" name="output">
+                    @{
+                        if (ViewBag.m != null)
+                        {
+                            @ViewBag.m.Output
+                        }
+                    }
+                </textarea>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+
+            
+            <div class="col-lg-12 col-md-12, col-sm-12 col-xs-12">
+                <p>
+                    <a class="btn btn-primary btn-lg" href="#" onclick="$('#cipherForm').append('<input type=\'hidden\' name=\'type\' value=\'enc\'\'>').submit();">Encrypt</a>
+                </p>
+            </div>
+        </div>
+                        }
+</div>
