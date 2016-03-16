@@ -6,13 +6,9 @@ namespace Mandatory1.ViewModels
 {
     public class CipherModel
     {
-        private static string originalCh = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~@`!#$%^&*+=-[]\\\';,/{}|\":.<>?() 0123456789"; // For reference only
-        private static string feed = "%xEml;4ePJTcItg}XV\"h>3\\psHy'/bY1[{ f=N@~G6q50*C7z:(O|QkMnFZBoLjD]&d?RA,)S+8iKa^u29<#w$rW.v`U-!";
-        private static List<char> feedList = new List<char>(feed.ToCharArray());
         [Required]
         [Display(Name = "Text to use cipher on")]
-        [RegularExpression("^[a-zA-Z0-9?><;:,(){}\\[\\]\\-_+=!~ .`@?#/$%\\^&*|'\\\\]*$", ErrorMessage = "Some of the characters you have entered are not allowed!")]
-        public string input { get; set; }
+       public string input { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
         public string secret { get; set; }
@@ -28,47 +24,30 @@ namespace Mandatory1.ViewModels
 
         public void process(string cipher)
         {
-            List<char> inputList = new List<char>(input.ToCharArray());
             string processedString = "";
             switch (cipher)
             {
                 case "shift":
-                    int shift = int.Parse(secret);
+                    int shift = (int.Parse(secret)+ char.MaxValue)% char.MaxValue;
                     if (type == "dec")
                     {
-                        shift = shift * -1;
-                    }
-                    
+                       shift = decimal.ToInt32(decimal.Negate(shift));
+                    }                   
 
-                    for (int i = 0; i < inputList.Count; i++)
+                    for (int i = 0; i < input.Length; i++)
                     {
-                        processedString += feedList[System.Math.Abs(feedList.IndexOf(inputList[i]) + shift) % feed.Length];
+                        processedString += (char)((input[i] + shift) % char.MaxValue);
                     }
-                    
+
                     break;
                 case "vigenere":
-                    List<char[]> alphabetsList = new List<char[]>(secret.Length);
-                    //Create alphabets array to use 
-                    for(int i = 0; i < secret.Length; i++)
-                    {
-                        alphabetsList.Add(new char[feedList.Count]);
-                        int alpha_index = feedList.IndexOf(secret[i]);
-                        for(int j = 0; j < feedList.Count; j++)
-                        {
-                            alphabetsList[i][(j+alpha_index)%feedList.Count] = feedList[j];
-                        }
-                    }
-                   // process
                     int index = 0;
-                    for(int i = 0; i < inputList.Count; i++)
+                    foreach(char currInput in input)
                     {
-                        if (type == "enc") {
-                           processedString += alphabetsList[index % alphabetsList.Count][feedList.IndexOf(inputList[i])];
-                        } else
-                        {
-                            processedString += feedList[(new String(alphabetsList[index % alphabetsList.Count])).IndexOf(inputList[i])];
-                        }
-                        index++;
+                        int secretAtIndex = secret[index];
+                        if (type == "dec") { secretAtIndex = decimal.ToInt32(decimal.Negate(secretAtIndex)); }
+                        processedString += (char)((currInput + secretAtIndex) % char.MaxValue);
+                        index = (index < secret.Length - 1) ? index = index + 1 : index = 0;
                     }
                     break;
                 case "gcd":
@@ -77,11 +56,10 @@ namespace Mandatory1.ViewModels
                     int b = int.Parse(secret);
                     while (b > 0)
                     {
-                        r =  a%b; //this means (modulo) in both c# and javascript.
+                        r =  a%b;
                         a = b;
                         b = r;
                     }
-
                     processedString = a.ToString();
                     break;
                 default:
