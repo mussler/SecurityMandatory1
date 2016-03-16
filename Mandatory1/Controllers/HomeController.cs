@@ -66,5 +66,23 @@ namespace Mandatory1.Controllers
             ViewBag.m = m;
             return View(m);
         }
+        [HttpGet]
+        public ActionResult Extra()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Extra(ViewModels.CipherModel m)
+        {
+            if (!ModelState.IsValid || (m.type != "enc" && m.type != "dec"))
+            {
+                ViewBag.Error = true;
+                return View();
+            }
+
+            m.process("extra");
+            ViewBag.m = m;
+            return View(m);
+        }
     }
 }

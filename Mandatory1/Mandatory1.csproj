@@ -242,6 +242,7 @@
     <Content Include="Views\Home\Shift.cshtml" />
     <Content Include="Views\Home\Vigenere.cshtml" />
     <Content Include="Views\Home\GCD.cshtml" />
+    <Content Include="Views\Home\Extra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

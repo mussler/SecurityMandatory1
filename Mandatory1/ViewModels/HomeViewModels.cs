@@ -62,6 +62,55 @@ namespace Mandatory1.ViewModels
                     }
                     processedString = a.ToString();
                     break;
+                case "extra":
+                    Dictionary<char, char> substituteTable = new Dictionary<char, char>();
+                    substituteTable.Add('?', 'w');
+                    substituteTable.Add('.', 'h');
+                    substituteTable.Add('1', 'e');
+                    substituteTable.Add('(', 'n');
+                    substituteTable.Add('v', ' ');
+                    substituteTable.Add('-', 'i');
+                    substituteTable.Add('\"', 't');
+                    substituteTable.Add('3', 'c');
+                    substituteTable.Add('\'', 'o');
+                    substituteTable.Add('!', 'u');
+                    substituteTable.Add('$', 'r');
+                    substituteTable.Add('#', 's');
+                    substituteTable.Add('0', 'f');
+                    substituteTable.Add(')', 'm');
+                    substituteTable.Add('5', 'a');
+                    substituteTable.Add(' ', 'v');
+                    substituteTable.Add('&', 'p');
+                    substituteTable.Add('4', 'b');
+                    substituteTable.Add('*', 'l');
+                    substituteTable.Add('2', 'd');
+                    substituteTable.Add('/', 'g');
+                    substituteTable.Add('H', 'N');
+                    substituteTable.Add('%', 'q');
+                    substituteTable.Add('j', ',');
+                    substituteTable.Add('+', 'k');
+                    substituteTable.Add('J', 'L');
+                    substituteTable.Add('o', '\'');
+                    substituteTable.Add('O', 'G');
+                    substituteTable.Add('h', '.');
+                    substituteTable.Add('i', '-');
+                    substituteTable.Add('S', 'C');
+                    substituteTable.Add('B', 'T');
+                    substituteTable.Add(',', 'j'); // switched characters between each other, shift by x?
+
+                    foreach (char c in input)
+                    {
+                        if (substituteTable.ContainsKey(c))
+                        {
+                            processedString += substituteTable[c];
+                        }
+                        else
+                        {
+                           processedString += c+"?";
+                        }
+                    }
+                    setOutput(processedString);
+                    break;
                 default:
                     processedString = "Incorrect cipher name!";
                     break;

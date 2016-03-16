@@ -1,0 +1,50 @@
+﻿@using Mandatory1.ViewModels
+@model CipherModel
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h2>The Extra Decoder</h2>
+        <p>Feed the ciphered text to re-substitute it.</p>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        @using (Html.BeginForm("Extra", "Home", FormMethod.Post, new { @id = "cipherForm", @class="col-lg-12" }))
+        {
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <h4>Input Text:</h4>
+
+                    @Html.ValidationMessageFor(x => x.input)
+                    @Html.TextAreaFor(x => x.input, new { @rows = "12", @cols = "99" })
+
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                
+                <div class="col-lg-12 col-md-12, col-sm-6 col-xs-6">
+                    <p>
+                        <a class="btn btn-primary btn-lg" href="#" onclick="$('#cipherForm').append('<input type=\'hidden\' name=\'type\' value=\'enc\'\'><input type=\'hidden\' name=\'secret\' value=\'x\'\'>').submit();">Decrypt</a>
+                    </p>
+                </div>
+            </div>
+
+        }
+    </div>
+
+
+</div>
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-lg-12">
+        <h4>Output Text:</h4>
+        <textarea cols="999" rows="50" id="output" name="output" style="max-width: 100%">
+            @{
+                if (ViewBag.m != null)
+                {
+                    @ViewBag.m.Output
+                }
+            }
+        </textarea>
+    </div>
+</div>
+
